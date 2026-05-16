@@ -29,6 +29,7 @@ add_library(viz::layers_testing ALIAS viz_layers_testing)
 # the production layers in viz::layers (QuadLayer, ...).
 add_executable(viz_layers_tests
     test_clear_rect_layer.cpp
+    test_projection_layer.cpp
     test_quad_layer.cpp
     test_throwing_layer.cpp
 )
