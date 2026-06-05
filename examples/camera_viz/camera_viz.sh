@@ -187,13 +187,13 @@ PY
 }
 
 # ──────────────────────────────────────────────────────────────────────
-# run (run the viewer with the YAML as-is)
+# run (the viewer; args after CONFIG forward to camera_viz.py, e.g. --mode xr)
 # ──────────────────────────────────────────────────────────────────────
 
 cmd_run() {
     _require_local_config run "${1:-}"
     log_step "Starting camera_viz — Ctrl-C to exit"
-    "$LOCAL_VENV/bin/python" "$HERE/camera_viz.py" "$1"
+    "$LOCAL_VENV/bin/python" "$HERE/camera_viz.py" "$@"
 }
 
 # ──────────────────────────────────────────────────────────────────────
@@ -374,7 +374,7 @@ cmd_service_restart() {
 # ──────────────────────────────────────────────────────────────────────
 
 show_help() {
-    cat <<EOF
+    cat <<'EOF'
 camera_viz.sh — local development + Jetson deployment for camera_viz
 
 LOCAL

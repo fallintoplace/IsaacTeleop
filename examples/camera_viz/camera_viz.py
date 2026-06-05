@@ -179,9 +179,10 @@ def _build_rtp_entries(cfg: dict, is_xr: bool) -> List[SourceEntry]:
     return entries
 
 
-def _make_session(cfg: dict) -> viz.VizSession:
+def _make_session(cfg: dict, mode_override: Optional[str] = None) -> viz.VizSession:
     display = cfg.get("display", {})
-    mode_str = display.get("mode", "window").lower()
+    # --mode overrides display.mode when given.
+    mode_str = (mode_override or display.get("mode", "window")).lower()
     session_cfg = viz.VizSessionConfig()
     if mode_str == "window":
         session_cfg.mode = viz.DisplayMode.kWindow
@@ -206,6 +207,12 @@ def _make_session(cfg: dict) -> viz.VizSession:
 def main(argv: Optional[list[str]] = None) -> int:
     parser = argparse.ArgumentParser(description="Televiz camera_viz — display side")
     parser.add_argument("config", type=Path, help="YAML config file")
+    parser.add_argument(
+        "--mode",
+        choices=("window", "xr"),
+        default=None,
+        help="Override display.mode from the config (default: use the config's value).",
+    )
     args = parser.parse_args(argv)
 
     with open(args.config) as f:
@@ -223,7 +230,7 @@ def main(argv: Optional[list[str]] = None) -> int:
     if source_mode not in ("local", "rtp"):
         raise ValueError(f"camera_viz: source must be local|rtp, got {source_mode!r}")
 
-    session = _make_session(cfg)
+    session = _make_session(cfg, mode_override=args.mode)
     is_xr = session.is_xr_mode()
 
     if source_mode == "local":
