@@ -16,6 +16,7 @@ Available Retargeters:
     - LocomotionRootCmdRetargeter: Locomotion from controller inputs
     - FootPedalRootCmdRetargeter: Root command from 3-axis foot pedal (horizontal/vertical + rudder)
     - GripperRetargeter: Pinch-based gripper control
+    - JointStateRetargeter: Generic joint-space device (leader arm, exoskeleton) -> joint or EE action
     - SharpaHandRetargeter: Pinocchio/Pink IK-based retargeting for Sharpa hand
     - SharpaBiManualRetargeter: Bimanual version of SharpaHandRetargeter
     - Se3AbsRetargeter: Absolute EE pose control
@@ -98,6 +99,17 @@ _LAZY_IMPORTS: dict[str, tuple[str, str, str | None]] = {
     # .gripper_retargeter
     "GripperRetargeter": (".gripper_retargeter", "GripperRetargeter", None),
     "GripperRetargeterConfig": (".gripper_retargeter", "GripperRetargeterConfig", None),
+    # .joint_space (generic joint-space devices: leader arms, exoskeletons, ...)
+    "JointStateRetargeter": (
+        ".joint_space.joint_state_retargeter",
+        "JointStateRetargeter",
+        None,
+    ),
+    "JointStateRetargeterConfig": (
+        ".joint_space.joint_state_retargeter",
+        "JointStateRetargeterConfig",
+        None,
+    ),
     # .se3_retargeter  (requires retargeters-lite extra: scipy)
     "Se3AbsRetargeter": (".se3_retargeter", "Se3AbsRetargeter", "retargeters-lite"),
     "Se3RelRetargeter": (".se3_retargeter", "Se3RelRetargeter", "retargeters-lite"),
@@ -189,6 +201,9 @@ __all__ = [
     # Manipulator retargeters
     "GripperRetargeter",
     "GripperRetargeterConfig",
+    # Generic joint-space device retargeters (leader arms, exoskeletons, ...)
+    "JointStateRetargeter",
+    "JointStateRetargeterConfig",
     "Se3AbsRetargeter",
     "Se3RelRetargeter",
     "Se3RetargeterConfig",

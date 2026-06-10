@@ -10,6 +10,13 @@ torch>=2.7.0
 # and NumPy 1.x, which cannot coexist with Pinocchio 3.x in combined environments.
 nlopt>=2.6.2
 
+# Pinocchio for JointStateRetargeter(mode="ee_pose"): URDF forward kinematics for
+# joint-space leader arms / exoskeletons. Declared explicitly (rather than relying
+# on dex-retargeting pulling it transitively) so EE-mode is reproducible. Floor at
+# 4.0 to get the cmeel-free packaging (libpinocchio/eigenpy); pin 3.9.0's bindings
+# link broken cmeel-urdfdom sonames at runtime. `mode="joint"` never imports it.
+pin>=4.0.0
+
 # NOTE: The Sharpa retargeter's Pinocchio/Pink/daqp/loop-rate-limiters deps live
 # in `requirements-grounding.txt`, transitively via the `robotic_grounding`
 # wheel. They were briefly listed here while sharpa_hand_retargeter.py imported
